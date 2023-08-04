@@ -1,0 +1,35 @@
+// Fonts
+@import url('https://fonts.bunny.net/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+// @import 'bootstrap/scss/bootstrap';
+
+
+//Font-Awesome 
+
+@import "@fortawesome/fontawesome-free/css/all.css";
+// Tailwind css 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+// utility 
+@import './base/utility';
+
+// layouts 
+@import './layouts/adminSidebar';
+@import './layouts/form';
+@import './layouts/notification';
+@import './layouts/categoryArea';
+@import './layouts/navbar';
+@import './layouts/slider.scss';
+@import './layouts/avater';
+
+//Pages 
+
+@import './pages/profile';
+@import './pages/adminPage';

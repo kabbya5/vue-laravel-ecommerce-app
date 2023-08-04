@@ -1,0 +1,46 @@
+.category{
+    .category-title{
+        font-size:16px;
+        line-height: 22px;
+        text-transform: capitalize;
+        transition: all 0.3s;
+        a{
+            color:#111;
+            font-weight: 500;
+        }
+        .total-items{
+            color:#666;
+            line-height: 20px;
+            margin:5px 0;
+            font-size: 15px;
+        }
+        .shop-btn{
+            display:inline-block;
+            margin-top: 10px;
+            color:#111;
+            line-height: 22px;
+            text-transform: capitalize;
+            transition: all 0.3s;
+            background-color: rgb(59 130 246);
+            padding: 6px 10px;
+            border-radius: 10px;
+            color: #fff;
+            transition: all 0.3s;
+
+            &:hover{
+                background-color: #fff;
+                color:  rgb(59 130 246);
+                border: 1px solid  rgb(59 130 246);
+            }
+        }
+    }
+    .category-right-section{
+        width: 90px;
+        height: 100px;
+        img{
+            vertical-align: center;
+            width: 100%;
+            height:100%;
+        }
+    }
+}

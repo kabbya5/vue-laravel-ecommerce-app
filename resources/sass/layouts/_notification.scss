@@ -1,0 +1,44 @@
+#notification{
+    animation: moveInLeft 1s;
+    position: relative;
+
+    &:after{
+        content:'';
+        position: absolute;
+        left:0;
+        bottom:0;
+        height: 5px;
+        width:100%;
+        animation:status 6s linear forwards;
+    }
+    @keyframes status{
+        100%{
+            width:0;
+        }
+    }
+}
+#notification.bg-green-800{
+    &:after{
+        background-color: rgb(22 101 52);
+    }
+}
+
+#notification.bg-red-500{
+    &:after{
+        background-color: rgb(239 68 68);
+    }
+}
+
+@keyframes moveInLeft{
+    0%{
+        opacity: 0;
+        transform: translateX( 100px);
+      }
+      80%{
+        transform: translateX(-10px);
+      }
+      100%{
+        opacity:1;
+        transform: translate(0);
+    }
+}
