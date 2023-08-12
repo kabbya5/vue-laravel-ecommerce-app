@@ -1,6 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Backend\CategoryController;
+use App\Http\Controllers\Backend\SettingController;
 use Illuminate\Support\Facades\Route;
 
 Route::group([
@@ -18,3 +19,25 @@ Route::group([
     Route::post('/genarate/verification/code/{id}', 'AuthController@genarateEmailVerificationCode');
     Route::post('/verfy/account','AuthController@verifyAccount');
 });
+
+Route::group(['middleware' => 'Admin', 'prefix' => 'admin'],
+function (){
+    Route::controller(CategoryController::class)->group(function(){
+        Route::post('/categories/store','store');
+        Route::put('/categories/update/{category}','update');
+        Route::delete('/categories/delete/{category}','destory');
+        Route::get('/trash/categories','trashCategory');
+        Route::get('/restore/categories/{slug}', 'restoreCategory');
+        Route::delete('/forch/delete/categories/{slug}', 'forchDelete');
+    });
+
+    Route::controller(SettingController::class)->group(function (){
+        Route::post('/setting/store','store');
+        Route::put('/setting/update/{setting}','update');
+    });
+});
+
+Route::get('/admin/categories',[CategoryController::class,'index']);
+
+Route::get('/setting',[SettingController::class,'index']);
+

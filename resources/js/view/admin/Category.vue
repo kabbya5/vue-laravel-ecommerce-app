@@ -4,9 +4,23 @@
             <a href="" class="page-tile">
                 Dashboard > Category 
             </a>
-            <button @click="createModalForm" class="create-btn 
-            mt-4 px-6 py-1 transition duration-300
-            hover:text-white  hover:bg-sky-800">Create category </button>
+            <div>
+                <button v-if="trashCategory" @click="allCatgory" class="restore-btn 
+                    mt-4 px-6 py-1 transition duration-300 mr-4
+                  hover:text-white  hover:bg-red-800"> 
+                  <i class="fa-solid fa-xmark"></i>
+                </button>
+                <button v-else @click="trashCategories" class="restore-btn 
+                    mt-4 px-6 py-1 transition duration-300 mr-4
+                  hover:text-white  hover:bg-red-800"> 
+                  <i class="fa-solid fa-rotate"></i>
+                </button>
+                <button @click="createModalForm" class="create-btn 
+                mt-4 px-6 py-1 transition duration-300
+                hover:text-white  hover:bg-sky-800">
+                <i class="fa-solid fa-plus"> </i>
+            </button>
+            </div>
         </div>
         
         <div class="mt-12 w-ful">  
@@ -46,11 +60,20 @@
                             <td class="px-6 py-4">
                                 {{ cat.created_date }}
                             </td>
-                            <td class="py-4 px-6 bg-gray-50 dark:bg-gray-800">
+                            <td v-if="trashCategory" class="py-4 px-6 bg-gray-50 dark:bg-gray-800">
+                                <button @click="restoreCategory(cat.slug)" class="py-1 px-2 bg-orange-500 text-white mr-4">
+                                    <i class="fa-solid fa-rotate-left"></i>
+                                </button> 
+                                <button @click="forchDelete(cat.slug)" class="py-1 px-2 bg-red-700 text-white mr-4"> 
+                                    <i class="fa-regular fa-trash-can"></i>
+                                </button>
+                            </td>
+                            <td v-else class="py-4 px-6 bg-gray-50 dark:bg-gray-800">
+                                
                                 <button @click="editCategory(cat)" class="py-1 px-2 bg-orange-500 text-white mr-4">
                                     <i class="fa-regular fa-pen-to-square"></i>
                                 </button> 
-                                <button @click="deleteBrand(brand.id,brand.name)" class="py-1 px-2 bg-red-700 text-white mr-4"> 
+                                <button @click="deleteCategory(cat.slug)" class="py-1 px-2 bg-red-700 text-white mr-4"> 
                                     <i class="fa-regular fa-trash-can"></i>
                                 </button>
                             </td>
@@ -63,7 +86,7 @@
 
         <!-- modal form  -->
 
-        <div v-if="modalForm" class="fixed bg-slate-600/80 top-0 left-0 w-full h-screen">
+        <div v-if="modalForm" class="fixed bg-slate-600/80 top-20 left-0 w-full h-screen">
             <div class="w-96 p-4 bg-white mx-auto my-4">
                 <div class="flex items-center justify-between">
                     <h2 class="text-slate-800 font-[500] text-lg leading-7"> Category Form </h2>
@@ -73,19 +96,19 @@
                 <form @submit.prevent="modalForm=='create' ? createCategory() :updateCategory()" class="mt-4 form">
                     <div class="form-group">
                         <label for="title"> Category Title </label>
-                        <input type="text" class="w-full form-input" placeholder="Category title"
+                        <input type="text" class="w-full form-input" placeholder="Category Title"
                         v-model="category.category_title"
                         :class="{'error':error.category_title}">
                         
-                        <p v-if="error.category_title" class="error-meesage"> {{ error.category_title[0] }} </p>
+                        <p v-if="error.category_title" class="error-message"> {{ error.category_title[0] }} </p>
                     </div>
                     <div class="form-group">
-                        <label for="title"> Category Short Text </label>
-                        <textarea v-model="category.category_text" id="" cols="30" rows="5"
-                        class="form-input" :class="{'error':error.category_text}">
-
-                        </textarea>
-                        <p v-if="error.category_text" class="error-meesage"> {{ error.category_text[0] }} </p>
+                        <label for="title"> Category Position </label>
+                        <input type="text" class="w-full form-input" placeholder="Category Position"
+                        v-model="category.category_position"
+                        :class="{'error':error.category_position}">
+                        
+                        <p v-if="error.category_position" class="error-message"> {{ error.category_position[0] }} </p>
                     </div>
 
                     <div class="form-group">
@@ -93,10 +116,10 @@
                         <div class="flex items-center justify-between">
                             <input type="file" class="w-full form-input" placeholder="Category title"
                             @change="changeCategoyImg"
-                            :class="{'error':error.category_title}">
-                            <img class="ml-2 max-w-[50px] mt-2" :src="category.category_img ? category.category_img : category.category_oldImg" alt="">
+                            :class="{'error':error.category_img}">
+                            <img class="ml-2 max-w-[70px] mt-4" :src="category.category_img ? category.category_img : category.category_old_img" :alt="category.category_title">
                         </div>
-                        <p v-if="error.category_img" class="error-meesage"> {{ error.category_img[0] }} </p>
+                        <p v-if="error.category_img" class="error-message"> {{ error.category_img[0] }} </p>
                     </div>
 
                     <div class="submit-btn">
@@ -114,6 +137,7 @@ import { mapGetters } from 'vuex';
 export default{
     data(){
         return{
+            trashCategory:false,
             category:{},
         }
     },
@@ -145,21 +169,40 @@ export default{
         },
 
         createCategory(){
-            
             this.$store.dispatch('storeCategory',this.category);
         },
         editCategory(category){
-            this.modalForm = 'edit';
-            this.category = category;
+            this.$store.dispatch('toggleModalForm','edit');
+            this.category.category_title = category.category_title;
+            this.category.category_position = category.category_position;
+            this.category.category_old_img = category.category_img;
+            this.category.slug = category.slug;
         },
         updateCategory(){
-            this.$store.dispatch('storeCategory');
-            this.notification.message = "Successfully Update Catgory";
-            this.notificaion.type = 'success';
+            this.$store.dispatch('updateCategory',this.category)
+        },
+        deleteCategory(slug){
+            this.$store.dispatch('deleteCategory',slug);
+        },
+        trashCategories(){
+            this.trashCategory = true;
+            this.$store.dispatch('fetchTrashCategories');
+        },
+        allCatgory(){
+            this.trashCategory = false;
+            this.$store.dispatch('fetchCategories');   
+        },
+        restoreCategory(slug){
+            this.$store.dispatch('restoreCategory',slug);
+        },
+        forchDelete(slug){
+            if(confirm('The Category will be delete permamently !')){
+                this.$store.dispatch('forchDeleteCategory',slug);
+            }   
         }
     },
     mounted(){
-        this.$store.dispatch('fetchCategories');
+        this.allCatgory();
     }
 }
 </script>

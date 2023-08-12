@@ -132,7 +132,8 @@ export default{
         return{
             showAccountNav:false,
             navItems:[
-                {title:'Home', to:{name:'home'}, show:true}
+                {title:'Home', to:{name:'home'}, show:true},
+                {title:'Contact', to:{name:'contact'}, show:true},
             ],
             userid:User.id(),
         }

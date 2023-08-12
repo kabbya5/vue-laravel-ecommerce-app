@@ -18,10 +18,9 @@
         height: 100vh;
         overflow: auto;
         .sidebar-link{
-            
-            li{
-                padding: 6px 30px;
-                margin-bottom: 15px;
+            .nav-items{
+                padding: 6px 0 6px 15px;
+                margin-bottom: 10px;
                 .link{
                     font-size: 22px;
                     color: #111;
@@ -38,8 +37,9 @@
                         transition:  all 0.3s;
                     }
                 }
+
             }
-            li.active, li:hover{
+            .nav-items.active, .nav-items:hover{
                 background-color: #e7dada;
                 border-radius: 20px;
                 position: relative;

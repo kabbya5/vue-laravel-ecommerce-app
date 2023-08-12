@@ -18,7 +18,7 @@ class CategoryResource extends JsonResource
             'category_title' => $this->category_title,
             'slug' => $this->slug,
             'category_img' => $this->category_img,
-            'category_text' => $this->category_text,
+            'category_position' => $this->category_position,
             'created_date' => $this->created_at->diffForHumans(),
         ];
     }

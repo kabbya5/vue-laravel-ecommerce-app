@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('category_title');
             $table->string('slug');
-            $table->string('category_text');
+            $table->integer('category_position');
             $table->string('category_img');
             $table->softDeletes();
             $table->timestamps();

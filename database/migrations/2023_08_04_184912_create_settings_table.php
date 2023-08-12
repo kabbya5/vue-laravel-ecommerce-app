@@ -15,6 +15,12 @@ return new class extends Migration
     {
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
+            $table->string('website_name');
+            $table->string('website_email');
+            $table->string('website_email_2');
+            $table->string('website_phone');
+            $table->string('phone');
+            $table->string('phone_2');
             $table->timestamps();
         });
     }

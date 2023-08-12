@@ -1,5 +1,5 @@
 <template>
-    <div class="fixed top-0 right-0 pr-2 z-50"> 
+    <div class="fixed top-0 right-0 pr-2 z-[99999]"> 
         <div v-if="notifiction.message" id="notification" :class="notifictionBg">
             <div class="error flex items-center bg-white shadow-md pr-4 rounded-md mt-4">
                 <div class="icon ml-4  flex items-center justify-center
@@ -42,9 +42,6 @@ export default{
             if(this.notifiction.type == 'error'){
                 this.notifictionBg = 'bg-red-500';
                 this.notifictionText = 'text-red-500';
-            }else if(this.notifiction.type == 'success'){
-                this.notifictionBg = "bg-green-800";
-                this.notifictionText = 'text-black';
             }
         }
          

@@ -4,7 +4,7 @@
             <div class="top-nav py-4">
                 <nav>
                     <div class="flex justify-between items-center">
-                        <a href="" class="brand-logo w-96 px-6">
+                        <a class="brand-logo w-96 px-6">
                             <img  class="w-20" src="https://www.freeiconspng.com/thumbs/logo-design/rainbow-logo-design-transparent-0.png" alt="">
                         </a>
                         <div class="ml-4 mr-20">
@@ -30,24 +30,45 @@
                         <p class="mt-1 text-slate-400 font-[400] text-sm"> Main admin  </p>
                     </div>
                 </div>
-                <ul class="sidebar-link mt-10 px-4">
-                    <li :class="{'active':overviewTitle=='dashboard'}"> 
-                        <router-link @click="changeOverview('dashobard')" :to="{name:'home'}" class="link flex items-center" href="">
-                            <i class="fa-solid fa-chart-bar mr-5  text-slate-400 font-[400]"></i>
+                <ul class="sidebar-link mt-10 pl-2">
+                    <li class="nav-items" :class="{'active':overviewTitle=='dashboard'}"> 
+                        <router-link @click="changeOverview('dashobard')" :to="{name:'home'}" class="link flex items-center">
+                            <i class="fa-solid fa-chart-bar mr-5  text-slate-400 font-semibold"></i>
                             <span> dashboard </span>
                         </router-link>
                     </li>
     
-                    <li :class="{'active':overviewTitle=='category'}"> 
-                        <router-link @click="changeOverview('category')" :to="{name:'categories'}" class="link flex items-center" href="">
-                            <i class="fa-solid fa-chart-bar mr-5  text-slate-400 font-[400]"></i>
-                            <span> categories </span>
-                        </router-link>
+                    <li @click="changeOverview('category')" class="nav-items" :class="{'active':overviewTitle=='category'}"> 
+                        <button class="link flex items-center">
+                            <i class="fa-solid fa-bars-staggered mr-5  text-slate-400 font-semibold"></i>
+                            <span> Category  </span>
+                        </button>
                     </li>
 
-                    <li :class="{'active':overviewTitle=='setting'}"> 
-                        <router-link @click="changeOverview('setting')" :to="{name:'adminSetting'}" class="link flex items-center" href="">
-                            <i class="fa-solid fa-chart-bar mr-5  text-slate-400 font-[400]"></i>
+                    <ul v-if="overviewTitle=='category'" class="mt-4 ml-3">
+                        <li class="nav-items" :class="{'active':overviewTitle=='category'}">
+                            <router-link @click="changeOverview('category')" :to="{name:'categories'}" class="link chiild-link flex items-center">
+                                <i class="fa-solid fa-chart-bar mr-5  text-slate-400 font-semibold"></i>
+                                <span> categories </span>
+                            </router-link>
+                        </li>
+                        <li class="nav-items" :class="{'active':overviewTitle=='dashboard'}">
+                            <router-link @click="changeOverview('category')" :to="{name:'categories'}" class="link flex items-center">
+                                <i class="fa-solid fa-chart-bar mr-5  text-slate-400 font-semibold"></i>
+                                <span> categories </span>
+                            </router-link>
+                        </li>
+                        <li class="nav-items" :class="{'active':overviewTitle=='dashboard'}">
+                            <router-link @click="changeOverview('category')" :to="{name:'categories'}" class="link flex items-center">
+                                <i class="fa-solid fa-chart-bar mr-5  text-slate-400 font-semibold"></i>
+                                <span> categories </span>
+                            </router-link>
+                        </li>
+                    </ul>
+
+                    <li class="nav-items" :class="{'active':overviewTitle=='setting'}"> 
+                        <router-link @click="changeOverview('setting')" :to="{name:'adminSetting'}" class="link flex items-center">
+                            <i class="fa-solid fa-gear mr-5 text-slate-400 font-semibold"></i>
                             <span> Setting </span>
                         </router-link>
                     </li>
@@ -60,13 +81,15 @@
         </div>
 
         <Notification />
+        <Preloader />
         
     </div>
 </template>
 <script>
 import Notification from '../Notification.vue';
+import Preloader from '../Preloader.vue';
 export default{
-    components:{ Notification},
+    components:{ Notification,Preloader},
     data(){
         return{
             overviewTitle: 'dashboard',

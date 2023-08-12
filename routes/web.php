@@ -11,12 +11,7 @@ use App\Http\Controllers\Backend\CategoryController;
 //     Route::post('/store/inastall','storeConfigaration')->name('install.configration.store');
 // });
 
-Route::group(['prefix' => 'admin',],function (){
-    Route::controller(CategoryController::class)->group(function(){
-        Route::get('/categories','index');
-        Route::post('/categories/store','store');
-    });
-});
+
 
 Route::get('/admin/{any}', [AdminDashboardController::class,'index'])->where('any','.*');
 

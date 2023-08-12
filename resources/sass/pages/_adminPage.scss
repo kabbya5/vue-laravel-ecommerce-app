@@ -6,12 +6,20 @@
         text-transform: capitalize;
         letter-spacing: 0.3px;
     }
-    .create-btn{
-        border: 1px solid rgb(7 89 133);
+    .create-btn,
+    .restore-btn{
         display: inline-block;
         margin-top: 4px;
         font-size: 20px;
         font-weight: 400;
         color: rgb(30 41 59);
+    }
+
+    .create-btn{
+        border: 1px solid rgb(7 89 133);
+    }
+
+    .restore-btn{
+        border: 1px solid rgb(153 27 27);
     }
 }

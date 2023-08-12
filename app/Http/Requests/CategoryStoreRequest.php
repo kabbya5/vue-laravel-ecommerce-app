@@ -23,10 +23,17 @@ class CategoryStoreRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'category_title' => 'required|max:60',
+        $rule = [
+            'category_title' => 'required|max:60|unique:categories,category_title',
             'category_img' => 'required',
-            'category_text' => 'max:130',
+            'category_position' => 'integer',
         ];
+        switch($this->method()){
+            case "PATCH":
+            case "PUT": 
+                $rule['category_title'] = 'required|max:60|unique:categories,category_title,'.$this->category->id;
+                $rule['category_img'] = '';
+        }
+        return $rule;
     }
 }

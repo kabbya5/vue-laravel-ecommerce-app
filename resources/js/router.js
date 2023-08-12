@@ -10,6 +10,7 @@ import Signup from './components/Signup.vue';
 import VerifyEmail from './components/VerifyEmail.vue';
 import Profile from './view/Profile.vue';
 import Home from './view/Home.vue';
+import Contact from './view/Contact.vue';
 import CategoryProducts from './view/CategoryProducts.vue';
 
 // Admin 
@@ -56,6 +57,11 @@ const routes = [
         name:'profile',
         component:Profile,
         beforeEnter:[authGuard,verifyGuard],
+    },
+    {
+        path:'/contact',
+        name:'contact',
+        component:Contact,
     },
     
     {
