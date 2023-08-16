@@ -34,7 +34,7 @@ class AdminSettingTest extends TestCase
 
         $response->assertStatus(200);
     }
-
+    
     public function test_admin_update_setting(){
         $id  = Setting::first()->id;
         $data = [

@@ -1,15 +1,14 @@
-import axios from "axios";
 
 const state ={
     categories:[],
-    modalForm:false,
+    categoryOption:[],
 };
 const getters = {
     categories:state =>{
         return state.categories;
     },
-    modalForm:state => {
-        return state.modalForm;
+    categoryOption:state =>{
+        return state.categoryOption;
     }
 };
 
@@ -29,7 +28,7 @@ const actions = {
         .then(res => {
             dispatch('setLoading',false);
             commit('pushCateories',category);
-            dispatch('toggleModalForm',false);
+            dispatch('setToggleModalForm',false);
             dispatch('fetchNotification',{
                 type:'success',
                 message:'The category has been created successfully',
@@ -45,7 +44,7 @@ const actions = {
         .then(res => {
             dispatch('setLoading',false);
             commit('pushCategories', category);
-            dispatch('toggleModalForm',false);
+            dispatch('setToggleModalForm',false);
             dispatch('fetchNotification',{
                 type:'success',
                 message:'The Category has been updated successfully',
@@ -106,23 +105,18 @@ const actions = {
             });
         })
     },
-
-    toggleModalForm({commit,state},value){
-        commit('toggleModalForm',value);
-    },
 };
 
 const mutations = {
     setCategories(state,categories){
         state.categories = categories;
+        categories.forEach(cat =>{
+            state.categoryOption.push({name:cat.category_title,value:cat.id});
+        });
     },
     pushCateories(state,category){
         state.categories.unshift(category);
     },
-    toggleModalForm(state,value){
-        state.modalForm = value;
-    },
-
     filterCategory(state,slug){
         state.categories = state.categories.filter(cat => cat.slug != slug);
     }

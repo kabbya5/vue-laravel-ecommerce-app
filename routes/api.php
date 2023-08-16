@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\SettingController;
+use App\Http\Controllers\Backend\SubcategoryController;
 use Illuminate\Support\Facades\Route;
 
 Route::group([
@@ -20,7 +21,7 @@ Route::group([
     Route::post('/verfy/account','AuthController@verifyAccount');
 });
 
-Route::group(['middleware' => 'Admin', 'prefix' => 'admin'],
+Route::group(['middleware' => ['Admin','api'], 'prefix' => 'admin'],
 function (){
     Route::controller(CategoryController::class)->group(function(){
         Route::post('/categories/store','store');
@@ -29,6 +30,12 @@ function (){
         Route::get('/trash/categories','trashCategory');
         Route::get('/restore/categories/{slug}', 'restoreCategory');
         Route::delete('/forch/delete/categories/{slug}', 'forchDelete');
+    });
+
+    Route::controller(SubcategoryController::class)->group(function(){
+        Route::get('/{query}/subcategories','index');
+        Route::post('/subcategories/store','store');
+        Route::put('/subcategories/update/{subcategory}','update');
     });
 
     Route::controller(SettingController::class)->group(function (){

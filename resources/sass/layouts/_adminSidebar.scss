@@ -19,9 +19,9 @@
         overflow: auto;
         .sidebar-link{
             .nav-items{
-                padding: 6px 0 6px 15px;
                 margin-bottom: 10px;
                 .link{
+                    padding: 6px 0 6px 15px;
                     font-size: 22px;
                     color: #111;
                     text-transform: capitalize;
@@ -39,9 +39,10 @@
                 }
 
             }
-            .nav-items.active, .nav-items:hover{
-                background-color: #e7dada;
+            .nav-items .router-link-active, .nav-items .link:hover{
+                background-color: rgb(8 145 178);
                 border-radius: 20px;
+                color: #fff;
                 position: relative;
                 &:after{
                     position: absolute;
@@ -51,15 +52,9 @@
                     left:90%;
                     width: 32px;
                     height: 100%;
-                    background-color: #ff0909;
+                    background-color: rgb(8 51 68);
                     border-top-right-radius: 20px;
                     border-bottom-right-radius: 20px;
-                }
-                .link{
-                    color: red;
-                }
-                .link i{
-                    color:red;
                 }
             }
         }

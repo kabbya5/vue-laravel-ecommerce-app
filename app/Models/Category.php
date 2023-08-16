@@ -17,6 +17,10 @@ class Category extends Model
         $this->slug = str_slug($value);
     }
 
+    public function subcategories(){
+        return $this->belongsToMany(Subcategory::class,'category_subcatgory','category_id','subcategory_id');
+    }
+
     public function getRouteKeyName(){
         return "slug";
     }

@@ -7,8 +7,8 @@
                         <a class="brand-logo w-96 px-6">
                             <img  class="w-20" src="https://www.freeiconspng.com/thumbs/logo-design/rainbow-logo-design-transparent-0.png" alt="">
                         </a>
-                        <div class="ml-4 mr-20">
-                            <h2 class="font-semibold text-3xl text-slate-800 tracking-wide capitalize"> {{ overviewTitle }} </h2>
+                        <div class="ml-4 w-full">
+                            <h2 class="font-semibold text-3xl text-slate-800 tracking-wide capitalize min-w-full"> {{ status.overviewTitle }} </h2>
                         </div>
                         <div class="input w-full flex items-center">
                             <input type="text" class="w-full">
@@ -30,6 +30,7 @@
                         <p class="mt-1 text-slate-400 font-[400] text-sm"> Main admin  </p>
                     </div>
                 </div>
+
                 <ul class="sidebar-link mt-10 pl-2">
                     <li class="nav-items" :class="{'active':overviewTitle=='dashboard'}"> 
                         <router-link @click="changeOverview('dashobard')" :to="{name:'home'}" class="link flex items-center">
@@ -37,15 +38,16 @@
                             <span> dashboard </span>
                         </router-link>
                     </li>
-    
-                    <li @click="changeOverview('category')" class="nav-items" :class="{'active':overviewTitle=='category'}"> 
-                        <button class="link flex items-center">
+                    <!-- //category  -->
+                    <li @click="changeOverview('category','category')" class="nav-items"> 
+                        <button class="link flex items-center w-full" 
+                        :class="{'router-link-active':status.active=='category'}">
                             <i class="fa-solid fa-bars-staggered mr-5  text-slate-400 font-semibold"></i>
                             <span> Category  </span>
                         </button>
                     </li>
 
-                    <ul v-if="overviewTitle=='category'" class="mt-4 ml-3">
+                    <ul v-if="status.overviewTitle=='category'" class="mt-4 ml-3">
                         <li class="nav-items" :class="{'active':overviewTitle=='category'}">
                             <router-link @click="changeOverview('category')" :to="{name:'categories'}" class="link chiild-link flex items-center">
                                 <i class="fa-solid fa-chart-bar mr-5  text-slate-400 font-semibold"></i>
@@ -53,9 +55,9 @@
                             </router-link>
                         </li>
                         <li class="nav-items" :class="{'active':overviewTitle=='dashboard'}">
-                            <router-link @click="changeOverview('category')" :to="{name:'categories'}" class="link flex items-center">
+                            <router-link @click="changeOverview('sub category','category')" :to="{name:'adminSubcategory'}" class="link flex items-center">
                                 <i class="fa-solid fa-chart-bar mr-5  text-slate-400 font-semibold"></i>
-                                <span> categories </span>
+                                <span> sub  categories </span>
                             </router-link>
                         </li>
                         <li class="nav-items" :class="{'active':overviewTitle=='dashboard'}">
@@ -65,9 +67,9 @@
                             </router-link>
                         </li>
                     </ul>
-
+                    <!-- End category  -->
                     <li class="nav-items" :class="{'active':overviewTitle=='setting'}"> 
-                        <router-link @click="changeOverview('setting')" :to="{name:'adminSetting'}" class="link flex items-center">
+                        <router-link @click="changeOverview('setting',)" :to="{name:'adminSetting'}" class="link flex items-center">
                             <i class="fa-solid fa-gear mr-5 text-slate-400 font-semibold"></i>
                             <span> Setting </span>
                         </router-link>
@@ -77,7 +79,7 @@
         </div>
 
         <div class="content mt-[60px] lg:ml-[350px] py-10">
-            <router-view> </router-view>
+            <router-view :key="$route.pullPatch"> </router-view>
         </div>
 
         <Notification />
@@ -86,18 +88,22 @@
     </div>
 </template>
 <script>
-import Notification from '../Notification.vue';
 import Preloader from '../Preloader.vue';
+import Notification from '../Notification.vue';
 export default{
-    components:{ Notification,Preloader},
+    components:{ Notification, Preloader},
     data(){
         return{
-            overviewTitle: 'dashboard',
+            status:{
+                overviewTitle: 'dashboard',
+                active:false,
+            }   
         }
     },
     methods:{
-        changeOverview(title){
-            this.overviewTitle = title;
+        changeOverview(title,active=false){
+            this.status.overviewTitle = title;
+            this.status.active = active;
         }
     }
 

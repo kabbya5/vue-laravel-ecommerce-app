@@ -18,6 +18,7 @@ import CategoryProducts from './view/CategoryProducts.vue';
 import AdminDashboard from './view/admin/Dashboard.vue';
 import AdminSetting from './view/admin/Setting.vue';
 import Category from './view/admin/Category.vue';
+import Subcategory from './view/admin/Subcategory.vue';
  
 
 
@@ -80,6 +81,12 @@ const routes = [
     {
         path:'/admin/dashboard/category',
         name:'categories',component:Category,
+        beforeEnter:[adminGuard],
+    },
+
+    {
+        path:'/admin/dashboard/subcategory',
+        name:'adminSubcategory', component:Subcategory,
         beforeEnter:[adminGuard],
     },
 
