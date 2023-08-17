@@ -36,6 +36,9 @@ function (){
         Route::get('/{query}/subcategories','index');
         Route::post('/subcategories/store','store');
         Route::put('/subcategories/update/{subcategory}','update');
+        Route::delete('/subcategories/delete/{subcategory}','destroy');
+        Route::post('/subcategories/restore/{slug}','restore');
+        Route::delete('/subcategories/forch/delete/{slug}','forchDelete');
     });
 
     Route::controller(SettingController::class)->group(function (){

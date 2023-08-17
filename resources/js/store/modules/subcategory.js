@@ -25,13 +25,6 @@ const actions = {
         })
     },
 
-    // filtersubcategories({commit,dispatch},query){
-    //     dispatch('setLoading',true);
-    //     axios.post('/api/admin/subcatgory/filter',query)
-    //     .then(res =>{
-    //         dispatch('setLoading',false);
-    //     })
-    // },
     storeSubcategory({commit,dispatch},subcategory){
         dispatch('setLoading',true);
 
@@ -54,13 +47,14 @@ const actions = {
         dispatch('setLoading',true);
         axios.put('/api/admin/subcategories/update/' +subcategory.slug,subcategory)
         .then(res => {
+            dispatch('fetchSubcategories',{page:1,query:'all'})
             dispatch('setToggleModalForm',false);
             dispatch('setLoading',false);
             dispatch('fetchNotification',{
                 type:'success',
                 message:'The subcategory has been created successfully',
             });
-            dispatch('fetchSubcategories');
+            
         })
         .catch(error => {
             dispatch('setLoading',false);
@@ -68,8 +62,47 @@ const actions = {
         })
     },
 
-    setToggleModalForm({commit,state},value){
-        commit('setModalForm',value);
+    deleteSubcategores({commit,dispatch},slug){
+        dispatch('setLoading',true);
+        axios.delete('/api/admin/subcategories/delete/' +slug)
+        .then(res =>{
+            dispatch('setLoading',false);
+            commit('removeSubcategory',slug);
+            dispatch('fetchNotification',{
+                type:'success',
+                message:'The subcategory has been deleted successfully',
+            });
+        })
+    },
+    restoreSubcategory({commit,dispatch},slug){
+        dispatch('setLoading',true);
+        axios.post('/api/admin/subcategories/restore/' + slug)
+        .then( res =>{
+            dispatch('setLoading',false);
+            commit('removeSubcategory',slug);
+
+            dispatch('fetchNotification',{
+                type:'success',
+                message:'The subcategory has been restored successfully',
+            })
+        })
+    },
+    forchDelete({commit,dispatch},slug){
+        dispatch('setLoading',true);
+        axios.delete('/api/admin/subcategories/forch/delete/' +slug)
+        .then(res => {
+            dispatch('setLoading',false);
+            commit('removeSubcategory',slug);
+
+            dispatch('fetchNotification',{
+                type:'success',
+                message:'The subcategory has been deleted successfully',
+            })
+        })
+        .catch(error => {
+            dispatch('setLoading',false);
+            alert('something worng ! try againg');
+        })
     }
 };
 
@@ -82,6 +115,9 @@ const mutations = {
     },
     setCount(state,count){
         state.count = count
+    },
+    removeSubcategory(state,slug){
+        state.subcategories = state.subcategories.filter(subcat => subcat.slug != slug);
     }
 };
 

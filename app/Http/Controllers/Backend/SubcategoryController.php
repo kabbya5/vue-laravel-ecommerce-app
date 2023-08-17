@@ -13,18 +13,21 @@ class SubcategoryController extends Controller
     public function index($query){
         if($query == 'all'){
             $subcategories =  SubcategoryResource::collection(Subcategory::latest()->paginate(15));
-            $count = [
-                'total' => $subcategories->total(),
-                'lastPage' => $subcategories->lastPage() 
-            ];
         }else if($query == 'short'){
             $subcategories =  SubcategoryResource::collection(Subcategory::orderBy('subcategory_title')->paginate(15));
-            $count = [
-                'total' => $subcategories->total(),
-                'lastPage' => $subcategories->lastPage() 
-            ];
+        }else if($query == 'trash'){   
+           $subcategories = SubcategoryResource::collection(Subcategory::onlyTrashed()->paginate(15)); 
+        }else{
+            $subcategories =  SubcategoryResource::collection(
+                Subcategory::where('subcategory_title','like', '%' .strtolower($query) .'%')->latest()->paginate(15)
+            );
         }
-        
+
+
+        $count = [
+            'total' => $subcategories->total(),
+            'lastPage' => $subcategories->lastPage() 
+        ];
         return response()->json([
             'subcategories' => $subcategories,
             'count' => $count,    
@@ -48,5 +51,17 @@ class SubcategoryController extends Controller
 
         $subcategory->update($request->only('subcategory_title'));
         $subcategory->categories()->sync($request->category_ids);
+    }
+
+    public function  destroy(Subcategory $subcategory){
+        $subcategory->delete();
+    }
+
+    public function restore($slug){
+        Subcategory::withTrashed()->where('slug',$slug)->restore();
+    }
+
+    public function forchDelete($slug){
+        Subcategory::withTrashed()->where('slug',$slug)->forceDelete();
     }
 }

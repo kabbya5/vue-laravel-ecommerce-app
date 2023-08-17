@@ -1,7 +1,7 @@
 <template>
-    <div class="my-10 bg-gray-100 shadow-sm py-2 border-2 border-gray-200">
+    <div v-if="pagination.totalPages > 1" class="my-10 bg-gray-100 shadow-sm py-2 border-2 border-gray-200">
         <div class="flex items-center justify-between">
-            <p class="text-[#313131] font-[500] text-lg"> Showing {{pagination.items}} of {{ pagination.totalItems}} </p>
+            <p class="text-[#313131] font-[500] text-lg"> Showing {{showingItems ? showingItems: pagination.items}} of {{ pagination.totalItems}} </p>
             <div class="flex ">
                 <ul class="flex">
                     <li> 
@@ -56,20 +56,32 @@
 <script>
 import { mapGetters } from 'vuex'
 export default{
+    data(){
+        return{
+            showingItems:false,
+        }
+    },
     computed:{
         ...mapGetters({
             pagination:'pagination',
             activePage:'activePage',
             query:'query',
         })
-
     },
 
     methods:{
         getItems(page){
+            this.showingItemsCalculation(page);
             let query = this.query;
             this.$store.dispatch('setActivePage',page);         
             this.$parent.getItems(page,query);
+        },
+        showingItemsCalculation(page){
+            if(this.pagination.totalPages == page){
+                this.showingItems = this.pagination.totalItems;  
+            }else{
+                this.showingItems = this.pagination.items * page;
+            }  
         }
     },
 }
