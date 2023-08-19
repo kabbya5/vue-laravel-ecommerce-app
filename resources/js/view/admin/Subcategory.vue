@@ -5,7 +5,7 @@
             class="text-[#313131] font-[400] text-xl"> Dashboard </router-link>
 
             <span class="mx-1 text-xl"> / </span>
-            <router-link :to="{name:'adminSubcategory'}"
+            <router-link :to="{name:'adminSubcategories'}"
             class="text-[#313131] font-[400] text-xl"> Subcategories  </router-link>
         </div>
 

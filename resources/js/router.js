@@ -19,6 +19,7 @@ import AdminDashboard from './view/admin/Dashboard.vue';
 import AdminSetting from './view/admin/Setting.vue';
 import Category from './view/admin/Category.vue';
 import Subcategory from './view/admin/Subcategory.vue';
+import Childcategory from './view/admin/Childcategory.vue';
  
 
 
@@ -80,13 +81,18 @@ const routes = [
 
     {
         path:'/admin/dashboard/category',
-        name:'categories',component:Category,
+        name:'adminCategories',component:Category,
         beforeEnter:[adminGuard],
     },
 
     {
-        path:'/admin/dashboard/subcategory',
-        name:'adminSubcategory', component:Subcategory,
+        path:'/admin/dashboard/subcategories',
+        name:'adminSubcategories', component:Subcategory,
+        beforeEnter:[adminGuard],
+    },
+    {
+        path:'/admin/dashboard/childcategories',
+        name:'adminChildcategories', component:Childcategory,
         beforeEnter:[adminGuard],
     },
 

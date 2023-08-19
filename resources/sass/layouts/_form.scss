@@ -15,11 +15,23 @@
             font-weight: 400;
             color: #111;
             border:1px solid #a59e9e;
+            border-radius: 8px;
             padding: 10px 20px;
             &:focus{
                 outline: 1px solid rgb(189, 231, 189);
             }
         }
+
+        .select-input{
+            padding: 10px 15px;
+            font-size: 18px;
+            border:1px solid #a59e9e;
+            &:focus{
+                outline: 1px solid green;
+            }
+        }
+
+            
         .error{
             border: 1px solid rgb(194, 25, 25);  
         }
@@ -29,6 +41,27 @@
             color: rgb(194, 25, 25);
             font-weight: 500;
             margin-top: 5px;
+        }
+    }
+    .search-form{
+        .search-box{
+            position: relative;
+
+            .search{
+                width: 100%;
+                padding: 10px 15px;
+                font-size: 18px;
+                border:1px solid #a59e9e;
+                &:focus{
+                    outline: 1px solid green;
+                }
+            }
+
+            .search-btn{
+                position: absolute;
+                right: 10px;
+                top: 25%;
+            }
         }
     }
 

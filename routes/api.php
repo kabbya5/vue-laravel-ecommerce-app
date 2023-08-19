@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Backend\CategoryController;
+use App\Http\Controllers\Backend\ChildcategoryController;
 use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Backend\SubcategoryController;
 use Illuminate\Support\Facades\Route;
@@ -39,6 +40,10 @@ function (){
         Route::delete('/subcategories/delete/{subcategory}','destroy');
         Route::post('/subcategories/restore/{slug}','restore');
         Route::delete('/subcategories/forch/delete/{slug}','forchDelete');
+    });
+
+    Route::controller(ChildcategoryController::class)->group(function(){
+        Route::post('/childcategories','index');
     });
 
     Route::controller(SettingController::class)->group(function (){

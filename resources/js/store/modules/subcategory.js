@@ -1,6 +1,7 @@
 
 const state ={
     subcategories:false,
+    subcategoryOption:[],
 };
 
 const getters = {
@@ -22,6 +23,9 @@ const actions = {
                 totalPages:res.data.count.lastPage,
                 totalItems:res.data.count.total,
             })
+        })
+        .catch(error =>{
+            alert('something wrong !'," try againg");
         })
     },
 
@@ -109,6 +113,10 @@ const actions = {
 const mutations = {
     setSubcategory(state,subcategories){
         state.subcategories = subcategories;
+
+        subcategories.forEach(cat => {
+            state.subcategoryOption.push({name:cat.subcategory_title,id:cat.id})
+        });
     },
     unshiftSubcategory(state,subcategory){
         state.subcategories.unshift(subcategory)

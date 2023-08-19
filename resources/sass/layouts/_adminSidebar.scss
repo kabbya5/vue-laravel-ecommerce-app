@@ -41,6 +41,9 @@
             }
             .nav-items .router-link-active, 
             .nav-items .link:hover{
+                i{
+                    color:#fff;
+                }
                 background-color: rgb(8 145 178);
                 border-radius: 20px;
                 color: #fff;

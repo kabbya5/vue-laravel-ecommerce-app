@@ -39,31 +39,35 @@
                         </router-link>
                     </li>
                     <!-- //category  -->
-                    <li @click="changeOverview('category','category')" class="nav-items"> 
-                        <button class="link flex items-center w-full" 
+                    <li @click="changeOverview('category','category')" class="nav-items flex justify-between items-center"> 
+                        <button class="link flex items-center justify-between w-full" 
                         :class="{'router-link-active':status.active=='category'}">
-                            <i class="fa-solid fa-bars-staggered mr-5  text-slate-400 font-semibold"></i>
+                        
+                        <div class="flex items-center">
+                            <i class="fa-solid fa-code-branch mr-5 text-slate-400 font-semibold"></i>
                             <span> Category  </span>
+                        </div>
+                        <i class="fa-solid fa-chevron-down mr-5  text-slate-400 font-semibold"></i>
                         </button>
                     </li>
 
                     <ul v-if="status.overviewTitle=='category'" class="mt-4 ml-3">
                         <li class="nav-items" :class="{'router-link-active':overviewTitle=='category'}">
-                            <router-link @click="changeOverview('category','category')" :to="{name:'categories'}" class="link chiild-link flex items-center">
-                                <i class="fa-solid fa-chart-bar mr-5  text-slate-400 font-semibold"></i>
+                            <router-link @click="changeOverview('category','category')" :to="{name:'adminCategories'}" class="link chiild-link flex items-center">
+                                <i class="fa-solid fa-bars-staggered mr-5 text-slate-400 font-semibold mr-5  text-slate-400 font-semibold"></i>
                                 <span> categories </span>
                             </router-link>
                         </li>
-                        <li class="nav-items" :class="{'router-link-active':overviewTitle=='dashboard'}">
-                            <router-link @click="changeOverview('sub category','category')" :to="{name:'adminSubcategory'}" class="link flex items-center">
+                        <li class="nav-items">
+                            <router-link @click="changeOverview('sub category','category')" :to="{name:'adminSubcategories'}" class="link flex items-center">
                                 <i class="fa-solid fa-chart-bar mr-5  text-slate-400 font-semibold"></i>
                                 <span> sub  categories </span>
                             </router-link>
                         </li>
-                        <li class="nav-items" :class="{'router-link-active':overviewTitle=='dashboard'}">
-                            <router-link @click="changeOverview('category')" :to="{name:'categories'}" class="link flex items-center">
+                        <li class="nav-items">
+                            <router-link @click="changeOverview('child category','category')" :to="{name:'adminChildcategories'}" class="link flex items-center">
                                 <i class="fa-solid fa-chart-bar mr-5  text-slate-400 font-semibold"></i>
-                                <span> categories </span>
+                                <span> child categories </span>
                             </router-link>
                         </li>
                     </ul>
