@@ -10,8 +10,22 @@ use Illuminate\Http\Request;
 class SubcategoryController extends Controller
 {
     
-    public function index($query){
+    public function index(Request $request){
+        $query = $request->input('query');
+
         if($query == 'all'){
+            $subcategories =  SubcategoryResource::collection(Subcategory::latest()->get());
+            $count = [
+                'total' => 0,
+                'lastPage' => 0, 
+            ];
+            return response()->json([
+                'subcategories' => $subcategories,
+                'count' => $count,    
+            ]);
+        }
+        
+        else if($query == 'paginate'){
             $subcategories =  SubcategoryResource::collection(Subcategory::latest()->paginate(15));
         }else if($query == 'short'){
             $subcategories =  SubcategoryResource::collection(Subcategory::orderBy('subcategory_title')->paginate(15));

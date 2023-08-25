@@ -1,19 +1,22 @@
-
+import Pagination from "./Pagination";
 const state ={
     subcategories:false,
-    subcategoryOption:[],
+    subcategoryOptions:[],
 };
 
 const getters = {
     subcategories:state =>{
         return state.subcategories;
     },
+    subcategoryOptions:state =>{
+        return state.subcategoryOptions;
+    },
 };
 
 const actions = {
     fetchSubcategories({commit,dispatch},{page,query}){
         dispatch('setLoading',true);
-        axios.get('/api/admin/'+query +'/subcategories?page='+page)
+        axios.post('/api/admin/subcategories?page='+page,{query:query})
         .then(res =>{
             dispatch('setLoading',false);
             commit('setSubcategory',res.data.subcategories);
@@ -114,15 +117,12 @@ const mutations = {
     setSubcategory(state,subcategories){
         state.subcategories = subcategories;
 
-        subcategories.forEach(cat => {
-            state.subcategoryOption.push({name:cat.subcategory_title,id:cat.id})
+        subcategories.forEach(subcat => {
+            state.subcategoryOptions.push({name:subcat.subcategory_title,value:subcat.id})
         });
     },
     unshiftSubcategory(state,subcategory){
         state.subcategories.unshift(subcategory)
-    },
-    setCount(state,count){
-        state.count = count
     },
     removeSubcategory(state,slug){
         state.subcategories = state.subcategories.filter(subcat => subcat.slug != slug);

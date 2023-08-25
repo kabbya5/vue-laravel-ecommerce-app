@@ -1,7 +1,10 @@
 const state = {
     pagination:{},
     activePage:1,
-    query:'all'
+    query:{
+        query:'index',
+        showItems:15,
+    },
 }
 const getters = {
     pagination:state =>{
@@ -23,8 +26,11 @@ const actions = {
     setActivePage({commit,state},page){
         commit('setActivePage',page);
     },
-    setFilterOption({commit,state},query){
+    setFilterOptionQuery({commit,state},query){
         commit('setQuery',query)
+    },
+    setFilterOptionItems({commit,state},items){
+        commit('setShowItems',items)
     }
 }
 
@@ -36,7 +42,10 @@ const mutations = {
         state.activePage = page;
     },
     setQuery(state,query){
-        state.query = query;
+        state.query.query = query;
+    },
+    setShowItems(state,items){
+        state.query.showItems = items;
     }
 }
 

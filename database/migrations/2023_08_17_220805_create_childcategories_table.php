@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('childcat_title');
             $table->string('slug');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

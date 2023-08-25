@@ -31,7 +31,6 @@
                     <li> 
                         <button class="w-10 h-10 rounded-full mx-2
                         flex items-center justify-center"
-                        :class="{'bg-green-800 text-white':activePage==i}"
                         :disabled="activePage==pagination.totalPages"
                         @click="getItems(activePage+1)">
                         <i class="fa-solid fa-chevron-right"></i>
@@ -40,7 +39,6 @@
                     <li> 
                         <button class="w-10 h-10 rounded-full mx-2
                         flex items-center justify-center"
-                        :class="{'bg-green-800 text-white':activePage==i}"
                         :disabled="activePage==pagination.totalPages"
                         @click="getItems(pagination.totalPages)"> 
                         <i class="fa-solid fa-forward"></i>
@@ -68,21 +66,11 @@ export default{
             query:'query',
         })
     },
-
     methods:{
         getItems(page){
-            this.showingItemsCalculation(page);
-            let query = this.query;
-            this.$store.dispatch('setActivePage',page);         
-            this.$parent.getItems(page,query);
-        },
-        showingItemsCalculation(page){
-            if(this.pagination.totalPages == page){
-                this.showingItems = this.pagination.totalItems;  
-            }else{
-                this.showingItems = this.pagination.items * page;
-            }  
+            this.$store.dispatch('setActivePage',page); 
+            this.$parent.getItems(page,this.query);
         }
-    },
+    }
 }
 </script>

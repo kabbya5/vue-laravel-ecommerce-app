@@ -34,7 +34,7 @@ function (){
     });
 
     Route::controller(SubcategoryController::class)->group(function(){
-        Route::get('/{query}/subcategories','index');
+        Route::post('/subcategories','index');
         Route::post('/subcategories/store','store');
         Route::put('/subcategories/update/{subcategory}','update');
         Route::delete('/subcategories/delete/{subcategory}','destroy');
@@ -44,6 +44,9 @@ function (){
 
     Route::controller(ChildcategoryController::class)->group(function(){
         Route::post('/childcategories','index');
+        Route::post('/childcategories/store','store');
+        Route::put('/childcategories/update/{childcategory}', 'update');
+        Route::delete('/childcategories/delete/{childcategory}', 'delete');
     });
 
     Route::controller(SettingController::class)->group(function (){
